@@ -3,254 +3,302 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PainTopia – Pixel Art Guide Tool for Android</title>
+  <title>PaintTopia – Pixel Art Guide Tool for Android</title>
   <meta name="description" content="Import any photo, get a step-by-step Heartopia pixel art guide, and trace it with a floating overlay.">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
     :root {
-      --bg:      #0d0a07;
-      --panel:   #1a0f08;
-      --panel2:  #24150c;
-      --line:    #6c4522;
-      --text:    #f3e5cf;
-      --muted:   #c8a77f;
-      --accent:  #f0a42b;
-      --blue:    #5bb7ff;
-      --green:   #4ade80;
-      --purple:  #a78bfa;
-      --max:     960px;
+      --bg:     #0d0a07;
+      --panel:  #1a0f08;
+      --panel2: #24150c;
+      --line:   #6c4522;
+      --text:   #f3e5cf;
+      --muted:  #c8a77f;
+      --accent: #f0a42b;
+      --blue:   #5bb7ff;
+      --green:  #4ade80;
+      --purple: #a78bfa;
+      --max:    960px;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.65;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+      background: var(--bg); color: var(--text);
+      line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden;
     }
 
-    /* ── Nav ───────────────────────────────────────────── */
-    nav {
-      position: sticky; top: 0; z-index: 200;
-      background: rgba(13,10,7,0.94);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(108,69,34,0.35);
-    }
-    .nav-in {
-      max-width: var(--max); margin: 0 auto; padding: 0 20px;
-      height: 54px; display: flex; align-items: center; justify-content: space-between;
-    }
+    /* ── Nav ── */
+    nav { position: sticky; top: 0; z-index: 200; background: rgba(13,10,7,.94); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(108,69,34,.35); }
+    .nav-in { max-width: var(--max); margin: 0 auto; padding: 0 20px; height: 54px; display: flex; align-items: center; justify-content: space-between; }
     .nav-logo { font-size: 15px; font-weight: 700; letter-spacing: .06em; color: var(--accent); text-decoration: none; }
     .nav-links { display: flex; gap: 24px; }
     .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; transition: color .15s; }
     .nav-links a:hover { color: var(--text); }
 
-    /* ── Shell ─────────────────────────────────────────── */
+    /* ── Shell ── */
     .shell { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
-
     hr.div { border: none; border-top: 1px solid rgba(108,69,34,.28); }
 
-    /* ── Hero ──────────────────────────────────────────── */
-    .hero {
-      padding: 88px 0 76px;
-      background:
-        radial-gradient(ellipse 80% 55% at 50% -5%, rgba(91,183,255,.09), transparent 58%),
-        radial-gradient(ellipse 55% 40% at 15% 105%, rgba(240,164,43,.07), transparent 52%);
-    }
-    .eyebrow {
-      font-size: 11px; text-transform: uppercase;
-      letter-spacing: .16em; color: var(--muted); margin-bottom: 18px;
-    }
-    h1 {
-      font-size: clamp(38px, 5.5vw, 62px);
-      line-height: 1.08; color: #fff; font-weight: 800; margin-bottom: 22px;
-    }
+    /* ── Hero ── */
+    .hero { padding: 88px 0 76px; background: radial-gradient(ellipse 80% 55% at 50% -5%, rgba(91,183,255,.09), transparent 58%), radial-gradient(ellipse 55% 40% at 15% 105%, rgba(240,164,43,.07), transparent 52%); }
+    .eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: .16em; color: var(--muted); margin-bottom: 18px; }
+    h1 { font-size: clamp(38px, 5.5vw, 62px); line-height: 1.08; color: #fff; font-weight: 800; margin-bottom: 22px; }
     h1 .hl { color: var(--accent); }
-    .hero-sub {
-      font-size: 18px; color: var(--muted); max-width: 520px;
-      line-height: 1.6; margin-bottom: 36px;
-    }
+    .hero-sub { font-size: 18px; color: var(--muted); max-width: 520px; line-height: 1.6; margin-bottom: 36px; }
+    .status-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 12px; font-weight: 600; border-radius: 20px; border: 1px solid; }
+    .badge-live   { background: rgba(74,222,128,.12);  border-color: var(--green);  color: var(--green);  }
+    .badge-coming { background: rgba(167,139,250,.12); border-color: var(--purple); color: var(--purple); }
     .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-    .btn {
-      display: inline-flex; align-items: center;
-      height: 46px; padding: 0 26px;
-      font-size: 15px; font-weight: 600; text-decoration: none;
-      border: none; cursor: pointer; transition: opacity .15s, border-color .15s;
-    }
+    .btn { display: inline-flex; align-items: center; height: 46px; padding: 0 26px; font-size: 15px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: opacity .15s, border-color .15s; }
     .btn-accent { background: var(--accent); color: #1a0d04; }
     .btn-accent:hover { opacity: .88; }
     .btn-ghost { background: transparent; border: 1px solid var(--line); color: var(--text); }
     .btn-ghost:hover { border-color: var(--muted); }
 
-    /* ── Section head ───────────────────────────────────── */
+    /* ── Section head ── */
     .sh { margin-bottom: 40px; }
     .sh h2 { font-size: clamp(24px, 3.5vw, 34px); color: #fff; font-weight: 700; margin-bottom: 8px; }
     .sh p  { color: var(--muted); font-size: 16px; }
 
-    /* ── Status badges ─────────────────────────────────── */
-    .status-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
-    .badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 6px 12px; font-size: 12px; font-weight: 600;
-      border-radius: 20px; border: 1px solid;
-    }
-    .badge-live { background: rgba(74,222,128,.12); border-color: var(--green); color: var(--green); }
-    .badge-coming { background: rgba(167,139,250,.12); border-color: var(--purple); color: var(--purple); }
-
-    /* ── How it works ───────────────────────────────────── */
+    /* ── How it works ── */
     .how { padding: 68px 0; }
-    .how-grid {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr auto 1fr;
-      align-items: start; margin-top: 40px;
-    }
+    .how-grid { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: start; margin-top: 40px; }
     .how-card { background: var(--panel); border: 1px solid var(--line); padding: 24px 20px; }
     .how-num { font-size: 11px; font-weight: 700; letter-spacing: .12em; color: var(--accent); text-transform: uppercase; margin-bottom: 12px; }
     .how-card h3 { font-size: 18px; color: #fff; font-weight: 700; margin-bottom: 10px; }
     .how-card p  { font-size: 14px; color: var(--muted); line-height: 1.55; }
     .how-arrow   { font-size: 20px; color: var(--line); padding: 38px 10px 0; align-self: flex-start; }
-    @media (max-width: 680px) {
-      .how-grid { grid-template-columns: 1fr; gap: 8px; }
-      .how-arrow { display: none; }
+    @media (max-width: 680px) { .how-grid { grid-template-columns: 1fr; gap: 8px; } .how-arrow { display: none; } }
+
+    /* ════════════════════════════════════════════════
+       DEMO SECTION
+       ════════════════════════════════════════════════ */
+    .demo-sec { padding: 68px 0; }
+
+    /* Controls toolbar */
+    .demo-toolbar {
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+      padding: 10px 12px; background: var(--panel);
+      border: 1px solid var(--line); border-bottom: none;
+      border-radius: 2px 2px 0 0;
+    }
+    .tb-group { display: flex; align-items: center; gap: 3px; }
+    .tb-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-right: 3px; white-space: nowrap; }
+    .tb-sep { width: 1px; height: 20px; background: var(--line); margin: 0 4px; }
+    .tb-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 3px;
+      min-width: 28px; height: 26px; padding: 0 7px;
+      background: var(--panel2); border: 1px solid var(--line);
+      color: var(--muted); font-size: 12px; font-family: inherit; cursor: pointer; transition: all .1s;
+    }
+    .tb-btn:hover { border-color: var(--muted); color: var(--text); }
+    .tb-btn.on  { background: rgba(240,164,43,.14); border-color: var(--accent); color: var(--accent); }
+    .tb-mi { font-size: 15px; line-height: 1; display: block; }
+
+    /* App-style frame wrapping canvas + bottom bar */
+    .demo-frame {
+      flex-shrink: 0; display: flex; flex-direction: column;
+      border: 1px solid var(--line); border-top: none;
+      border-radius: 0 0 2px 2px; overflow: hidden;
     }
 
-    /* ── Demo ───────────────────────────────────────────── */
-    .demo-sec { padding: 68px 0; }
-    .demo-layout { display: flex; gap: 20px; align-items: flex-start; }
-    .demo-canvas-wrap {
-      position: relative; flex-shrink: 0;
-      border: 1px solid var(--line); line-height: 0;
-    }
+    /* Canvas area */
+    .demo-canvas-area { position: relative; background: #060a10; line-height: 0; }
     #demoCanvas { display: block; image-rendering: pixelated; image-rendering: crisp-edges; }
 
-    /* Overlay panel */
+    /* Floating overlay panel (simulates app's OverlayGuideService) */
     .d-overlay {
-      position: absolute; top: 14px; right: 14px; width: 148px;
-      background: rgba(12,8,4,.96); border: 1px solid var(--line);
-      font-size: 12px; user-select: none;
+      position: absolute; top: 12px; right: 12px; width: 148px;
+      background: rgba(10,6,3,.97); border: 1px solid var(--line);
+      box-shadow: 0 6px 20px rgba(0,0,0,.55); user-select: none; font-size: 12px;
     }
     .d-topbar {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 5px 9px; background: rgba(36,21,12,.9);
+      padding: 5px 8px; background: rgba(36,21,12,.95);
       border-bottom: 1px solid rgba(108,69,34,.5);
     }
-    .d-topbar-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
-    .d-grid-info { font-size: 9px; color: var(--accent); margin-left: 6px; font-weight: 600; }
-    .d-close { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 11px; padding: 2px; line-height: 1; }
-    .d-body { padding: 10px 10px 6px; }
-    .d-step-lbl { font-size: 10px; color: var(--muted); letter-spacing: .06em; margin-bottom: 6px; }
-    .d-color-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .d-topbar-title { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+    .d-grid-lbl { font-size: 9px; color: var(--accent); font-weight: 700; margin-left: 5px; }
+    .d-close { background: none; border: none; color: var(--muted); cursor: pointer; display: flex; align-items: center; padding: 2px; }
+    .d-body { padding: 9px 9px 6px; }
+    .d-step-lbl { font-size: 10px; color: var(--muted); letter-spacing: .05em; margin-bottom: 7px; }
+    .d-color-row { display: flex; align-items: center; gap: 7px; margin-bottom: 9px; }
     .d-swatch { width: 22px; height: 22px; border: 1px solid rgba(255,255,255,.15); flex-shrink: 0; }
-    .d-color-name { font-size: 13px; font-weight: 700; color: #fff; }
-    .d-pxcount { font-size: 10px; color: var(--muted); }
-    .d-btns { display: flex; gap: 4px; margin-bottom: 8px; }
+    .d-color-name { font-size: 13px; font-weight: 700; color: #fff; line-height: 1.2; }
+    .d-pxcount    { font-size: 10px; color: var(--muted); }
+    .d-btns { display: flex; gap: 3px; margin-bottom: 7px; }
     .d-btn {
-      flex: 1; height: 24px; background: var(--panel2);
-      border: 1px solid var(--line); color: var(--text);
+      flex: 1; height: 24px; display: flex; align-items: center; justify-content: center;
+      background: var(--panel2); border: 1px solid var(--line); color: var(--text);
       font-size: 11px; cursor: pointer; transition: background .1s;
     }
     .d-btn:hover { background: rgba(108,69,34,.5); }
-    .d-btn-play { background: var(--accent) !important; color: #1a0d04 !important; font-weight: 700; border-color: var(--accent) !important; }
+    .d-btn-play { background: var(--accent) !important; border-color: var(--accent) !important; color: #1a0d04 !important; font-weight: 700; }
     .d-btn-play:hover { opacity: .85; }
-    .d-togs { display: flex; gap: 4px; margin-bottom: 8px; }
+    .d-togs { display: flex; gap: 3px; margin-bottom: 7px; }
     .d-tog {
-      flex: 1; height: 20px; background: var(--panel2);
-      border: 1px solid var(--line); color: var(--muted); font-size: 10px; cursor: pointer; transition: all .1s;
+      flex: 1; height: 20px; display: flex; align-items: center; justify-content: center;
+      background: var(--panel2); border: 1px solid var(--line); color: var(--muted);
+      font-size: 11px; cursor: pointer; transition: all .1s;
     }
-    .d-tog.on { background: rgba(240,164,43,.15); border-color: var(--accent); color: var(--accent); }
+    .d-tog.on { background: rgba(240,164,43,.14); border-color: var(--accent); color: var(--accent); }
     .d-track { height: 3px; background: rgba(108,69,34,.25); }
-    .d-fill { height: 100%; background: var(--accent); transition: width .4s ease; }
+    .d-fill  { height: 100%; background: var(--accent); transition: width .4s ease; }
+
+    /* Bottom step bar (simulates app's guide mode bottom controls) */
+    .demo-stepbar {
+      background: var(--panel2);
+      border-top: 1px solid var(--line);
+    }
+    .dsb-track { height: 2px; background: rgba(108,69,34,.25); }
+    .dsb-fill  { height: 100%; background: var(--accent); transition: width .4s ease; }
+    .dsb-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 12px; gap: 8px;
+    }
+    .dsb-color { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    .dsb-swatch { width: 22px; height: 22px; border: 1px solid rgba(255,255,255,.15); flex-shrink: 0; }
+    .dsb-name { font-size: 13px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .dsb-step { font-size: 11px; color: var(--muted); }
+    .dsb-nav { display: flex; gap: 4px; flex-shrink: 0; }
+    .dsb-btn {
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+      background: var(--panel); border: 1px solid var(--line); color: var(--text);
+      cursor: pointer; transition: all .1s;
+    }
+    .dsb-btn:hover { border-color: var(--muted); }
+    .dsb-play { background: var(--accent) !important; border-color: var(--accent) !important; color: #1a0d04 !important; }
+    .dsb-play:hover { opacity: .88; }
+
+    /* Demo layout */
+    .demo-layout { display: flex; gap: 16px; align-items: flex-start; }
+    .demo-side { flex: 1; display: flex; flex-direction: column; gap: 5px; }
 
     /* Step list */
-    .demo-steps { flex: 1; display: flex; flex-direction: column; gap: 5px; }
     .ds-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 14px; background: var(--panel); border: 1px solid var(--line);
+      display: flex; align-items: center; gap: 9px;
+      padding: 9px 13px; background: var(--panel); border: 1px solid var(--line);
       cursor: pointer; transition: border-color .15s, background .15s; font-size: 13px;
     }
     .ds-item:hover { border-color: var(--muted); }
-    .ds-item.current { border-color: var(--accent); background: rgba(240,164,43,.07); }
-    .ds-item.done { opacity: .42; }
-    .ds-swatch { width: 16px; height: 16px; border: 1px solid rgba(255,255,255,.12); flex-shrink: 0; }
-    .ds-name { flex: 1; font-weight: 600; color: #fff; }
-    .ds-count { font-size: 11px; color: var(--muted); }
-    .ds-tick { font-size: 13px; color: var(--accent); }
-    .demo-hint { font-size: 12px; color: var(--muted); margin-top: 12px; line-height: 1.5; opacity: .75; }
+    .ds-item.cur  { border-color: var(--accent); background: rgba(240,164,43,.07); }
+    .ds-item.done { opacity: .38; }
+    .ds-sw { width: 16px; height: 16px; border: 1px solid rgba(255,255,255,.12); flex-shrink: 0; }
+    .ds-nm { flex: 1; font-weight: 600; color: #fff; }
+    .ds-ct { font-size: 11px; color: var(--muted); }
+    .ds-tk { font-size: 13px; color: var(--accent); }
+    .demo-hint { font-size: 12px; color: var(--muted); margin-top: 10px; line-height: 1.55; opacity: .7; }
 
-    /* Demo controls bar */
-    .demo-controls {
-      display: flex; gap: 8px; flex-wrap: wrap;
-      margin-bottom: 16px; padding: 12px;
-      background: var(--panel); border: 1px solid var(--line);
-    }
-    .ctrl-group { display: flex; align-items: center; gap: 6px; }
-    .ctrl-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
-    .ctrl-btn {
-      display: inline-flex; align-items: center; justify-content: center;
-      min-width: 36px; height: 28px; padding: 0 8px;
-      background: var(--panel2); border: 1px solid var(--line);
-      color: var(--muted); font-size: 14px; cursor: pointer;
-      transition: all .12s; font-family: 'Segoe UI', sans-serif;
-    }
-    .ctrl-btn:hover { border-color: var(--muted); color: var(--text); }
-    .ctrl-btn.active { background: rgba(240,164,43,.15); border-color: var(--accent); color: var(--accent); }
-    .ctrl-btn .material-icons { font-size: 16px; }
-    .ctrl-divider { width: 1px; height: 20px; background: var(--line); margin: 0 4px; }
-
-    @media (max-width: 760px) {
-      .demo-layout { flex-direction: column; align-items: stretch; }
-      .demo-canvas-wrap { align-self: center; max-width: 100%; overflow: hidden; }
-      .demo-steps { flex-direction: row; flex-wrap: wrap; }
-      .ds-item { flex: 1 1 130px; }
+    @media (max-width: 800px) {
+      .demo-layout { flex-direction: column; }
+      .demo-frame { width: 100% !important; }
+      .demo-side { flex-direction: row; flex-wrap: wrap; }
+      .ds-item { flex: 1 1 120px; }
+      .demo-toolbar { border-radius: 2px 2px 0 0; }
     }
 
-    /* ── Features ───────────────────────────────────────── */
+    /* ── Features ── */
     .features { padding: 68px 0; }
     .feat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 40px; }
     .feat-card { background: var(--panel); border: 1px solid var(--line); padding: 22px 20px; }
-    .feat-icon { font-size: 26px; margin-bottom: 12px; }
+    .feat-icon { font-size: 28px; color: var(--accent); margin-bottom: 12px; line-height: 1; }
     .feat-card h3 { font-size: 16px; color: #fff; font-weight: 700; margin-bottom: 8px; }
     .feat-card p  { font-size: 14px; color: var(--muted); line-height: 1.55; }
 
-    /* ── Roadmap ────────────────────────────────────────── */
+    /* ── Roadmap ── */
     .roadmap { padding: 68px 0; }
     .roadmap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
     .rm-section { background: var(--panel); border: 1px solid var(--line); padding: 24px 20px; }
     .rm-section h3 { font-size: 16px; color: #fff; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
     .rm-section h3 .dot { width: 8px; height: 8px; border-radius: 50%; }
-    .rm-section.live h3 .dot { background: var(--green); }
+    .rm-section.live   h3 .dot { background: var(--green); }
     .rm-section.coming h3 .dot { background: var(--purple); }
     .rm-list { list-style: none; }
-    .rm-list li {
-      font-size: 14px; color: var(--muted); padding: 8px 0;
-      border-bottom: 1px solid rgba(108,69,34,.15);
-      display: flex; align-items: center; gap: 10px;
-    }
+    .rm-list li { font-size: 14px; color: var(--muted); padding: 8px 0; border-bottom: 1px solid rgba(108,69,34,.15); display: flex; align-items: center; gap: 10px; }
     .rm-list li:last-child { border-bottom: none; }
-    .rm-check { color: var(--green); font-size: 14px; }
+    .rm-check   { color: var(--green);  font-size: 14px; }
     .rm-pending { color: var(--purple); font-size: 14px; }
+    @media (max-width: 680px) { .roadmap-grid { grid-template-columns: 1fr; } }
 
-    @media (max-width: 680px) {
-      .roadmap-grid { grid-template-columns: 1fr; }
+    /* ── Feedback / Form ── */
+    .feedback-sec { padding: 68px 0; }
+    .form-card { background: var(--panel); border: 1px solid var(--line); padding: 32px 28px; margin-top: 40px; }
+    @media (max-width: 600px) { .form-card { padding: 20px 16px; } }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+    @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }
+
+    .form-field { margin-bottom: 22px; }
+    .form-label { display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 7px; letter-spacing: .02em; }
+    .form-label .req { color: var(--accent); margin-left: 2px; }
+    .form-hint { font-size: 12px; color: var(--muted); margin-bottom: 8px; line-height: 1.5; }
+
+    .form-input, .form-select {
+      width: 100%; height: 40px; padding: 0 12px;
+      background: var(--panel2); border: 1px solid var(--line);
+      color: var(--text); font-size: 14px; font-family: inherit;
+      outline: none; transition: border-color .15s;
     }
+    .form-input::placeholder { color: rgba(200,167,127,.45); }
+    .form-input:focus, .form-select:focus { border-color: var(--accent); }
 
-    /* ── Palette preview ───────────────────────────────── */
-    .palette-sec { padding: 68px 0; background: var(--panel); }
-    .palette-grid { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 24px; }
-    .palette-group { margin-right: 16px; margin-bottom: 16px; }
-    .palette-group-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 6px; }
-    .palette-colors { display: flex; gap: 2px; }
-    .palette-swatch { width: 18px; height: 18px; border: 1px solid rgba(255,255,255,.1); }
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: ''; position: absolute; right: 12px; top: 50%;
+      transform: translateY(-50%);
+      border: 5px solid transparent; border-top-color: var(--muted);
+      pointer-events: none;
+    }
+    .form-select { appearance: none; -webkit-appearance: none; cursor: pointer; padding-right: 32px; }
+    .form-select option { background: var(--panel2); color: var(--text); }
 
-    /* ── Footer ─────────────────────────────────────────── */
+    .radio-group, .check-group { display: flex; flex-direction: column; gap: 7px; }
+    .radio-item, .check-item {
+      display: flex; align-items: center; gap: 10px;
+      cursor: pointer; padding: 7px 10px;
+      border: 1px solid transparent; transition: border-color .12s, background .12s;
+    }
+    .radio-item:hover, .check-item:hover { background: rgba(108,69,34,.18); border-color: rgba(108,69,34,.4); }
+    .radio-item input, .check-item input { display: none; }
+
+    .radio-dot {
+      width: 16px; height: 16px; border-radius: 50%;
+      border: 1.5px solid var(--line); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .12s, background .12s;
+    }
+    .radio-item input:checked ~ .radio-dot { border-color: var(--accent); background: rgba(240,164,43,.12); }
+    .radio-item input:checked ~ .radio-dot::after { content: ''; width: 7px; height: 7px; background: var(--accent); border-radius: 50%; display: block; }
+    .radio-item input:checked ~ .radio-lbl { color: var(--text); }
+
+    .check-box {
+      width: 16px; height: 16px;
+      border: 1.5px solid var(--line); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .12s, background .12s; font-size: 11px;
+    }
+    .check-item input:checked ~ .check-box { border-color: var(--accent); background: rgba(240,164,43,.12); color: var(--accent); }
+    .check-item input:checked ~ .check-box::after { content: '✓'; font-size: 11px; }
+    .check-item input:checked ~ .check-lbl { color: var(--text); }
+
+    .radio-lbl, .check-lbl { font-size: 14px; color: var(--muted); transition: color .12s; }
+
+    .form-divider { border: none; border-top: 1px solid rgba(108,69,34,.3); margin: 28px 0; }
+
+    .form-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
+    .form-err { font-size: 13px; color: #f87171; }
+
+    .form-success {
+      display: none; text-align: center; padding: 56px 24px;
+    }
+    .form-success .succ-icon { color: var(--green); margin-bottom: 16px; }
+    .form-success h3 { font-size: 22px; color: #fff; font-weight: 700; margin-bottom: 10px; }
+    .form-success p  { color: var(--muted); font-size: 15px; }
+
+    /* ── Footer ── */
     footer { padding: 40px 0; border-top: 1px solid rgba(108,69,34,.28); }
-    .foot-row {
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 12px; font-size: 14px; color: var(--muted);
-    }
+    .foot-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 14px; color: var(--muted); }
     .foot-row a { color: var(--blue); text-decoration: none; }
     .foot-row a:hover { text-decoration: underline; }
     .foot-copy { margin-top: 10px; font-size: 13px; color: rgba(200,167,127,.4); }
@@ -266,6 +314,7 @@
         <a href="#demo">Demo</a>
         <a href="#features">Features</a>
         <a href="#roadmap">Roadmap</a>
+        <a href="#feedback">Feedback</a>
         <a href="privacy-policy.html">Privacy</a>
       </div>
     </div>
@@ -281,8 +330,8 @@
         with a floating overlay — no account required.
       </p>
       <div class="status-badges">
-        <span class="badge badge-live"><span class="rm-check">✓</span> Available Now</span>
-        <span class="badge badge-coming"><span class="rm-pending">◐</span> Coming Soon</span>
+        <span class="badge badge-live"><span class="rm-check">✓</span> Guide &amp; Overlay Available</span>
+        <span class="badge badge-coming"><span class="rm-pending">◐</span> Drawing Canvas Coming Soon</span>
       </div>
       <div class="hero-actions">
         <a href="#demo" class="btn btn-accent">Try the demo ↓</a>
@@ -304,19 +353,19 @@
         <div class="how-card">
           <div class="how-num">Step 01</div>
           <h3>Import</h3>
-          <p>Pick any photo from your gallery. Choose your grid size — the app pixelates it to the exact canvas resolution.</p>
+          <p>Pick any photo from your gallery. Choose your grid size and crop mode — the app pixelates it to the exact canvas resolution using the Heartopia 125-color palette.</p>
         </div>
         <div class="how-arrow">→</div>
         <div class="how-card">
           <div class="how-num">Step 02</div>
           <h3>Generate Guide</h3>
-          <p>Pixels are grouped by color into numbered steps so you paint one shade at a time, no guesswork needed.</p>
+          <p>Pixels are grouped by color into numbered steps so you paint one shade at a time. Export as an animated GIF or navigate step by step on device.</p>
         </div>
         <div class="how-arrow">→</div>
         <div class="how-card">
           <div class="how-num">Step 03</div>
-          <h3>Trace</h3>
-          <p>Float the overlay on top of any game or drawing app. Lock it to pass-through mode while you paint each pixel.</p>
+          <h3>Trace with Overlay</h3>
+          <p>Float the guide overlay on top of Heartopia or any drawing app. Lock it to pass-through mode and trace each pixel without leaving the game.</p>
         </div>
       </div>
     </div>
@@ -329,87 +378,103 @@
     <div class="shell">
       <div class="sh">
         <h2>Canvas Guide Demo</h2>
-        <p>Press Play or click a step. This is what the overlay looks like over your canvas.</p>
+        <p>Press Play or click any step. Both the overlay panel and bottom bar control the same guide — just like the real app.</p>
       </div>
 
-      <!-- Demo controls bar -->
-      <div class="demo-controls">
-        <div class="ctrl-group">
-          <span class="ctrl-label">Aspect</span>
-          <button class="ctrl-btn active" data-ctrl="aspect" title="16:9">16:9</button>
-          <button class="ctrl-btn" data-ctrl="aspect" title="4:3">4:3</button>
-          <button class="ctrl-btn" data-ctrl="aspect" title="1:1">1:1</button>
+      <!-- Toolbar: precision + aspect + view toggles -->
+      <div class="demo-toolbar">
+        <div class="tb-group">
+          <span class="tb-label">Precision</span>
+          <button class="tb-btn on" data-ctrl="precision" data-val="small"  title="30×18">S</button>
+          <button class="tb-btn"    data-ctrl="precision" data-val="medium" title="50×28">M</button>
+          <button class="tb-btn"    data-ctrl="precision" data-val="large"  title="100×56">L</button>
+          <button class="tb-btn"    data-ctrl="precision" data-val="xlarge" title="150×84">XL</button>
         </div>
-        <div class="ctrl-divider"></div>
-        <div class="ctrl-group">
-          <span class="ctrl-label">Precision</span>
-          <button class="ctrl-btn" data-ctrl="precision" title="Small">S</button>
-          <button class="ctrl-btn active" data-ctrl="precision" title="Medium">M</button>
-          <button class="ctrl-btn" data-ctrl="precision" title="Large">L</button>
-          <button class="ctrl-btn" data-ctrl="precision" title="XL">XL</button>
+        <div class="tb-sep"></div>
+        <div class="tb-group">
+          <span class="tb-label">Ratio</span>
+          <button class="tb-btn on" data-ctrl="aspect" data-val="16:9">16:9</button>
+          <button class="tb-btn"    data-ctrl="aspect" data-val="4:3">4:3</button>
+          <button class="tb-btn"    data-ctrl="aspect" data-val="1:1">1:1</button>
         </div>
-        <div class="ctrl-divider"></div>
-        <div class="ctrl-group">
-          <span class="ctrl-label">Crop</span>
-          <button class="ctrl-btn" data-ctrl="crop" title="Fit">Fit</button>
-          <button class="ctrl-btn active" data-ctrl="crop" title="Crop">Crop</button>
-          <button class="ctrl-btn" data-ctrl="crop" title="Stretch">Str</button>
-        </div>
-        <div class="ctrl-divider"></div>
-        <div class="ctrl-group">
-          <button class="ctrl-btn active" data-ctrl="palette" id="ctrlPalette" title="Heartopia Palette">
-            <span class="material-icons">palette</span>
-          </button>
-          <button class="ctrl-btn" data-ctrl="guide" id="ctrlGuide" title="Guide Mode">
-            <span class="material-icons">format_list_numbered</span>
-          </button>
-          <button class="ctrl-btn" data-ctrl="showall" id="ctrlShowAll" title="Show All">
-            <span class="material-icons">playlist_add</span>
-          </button>
-          <button class="ctrl-btn" data-ctrl="nums" id="ctrlNums" title="Numbers Only">
-            <span class="material-icons">tag</span>
-          </button>
+        <div class="tb-sep"></div>
+        <div class="tb-group">
+          <span class="tb-label">View</span>
+          <button class="tb-btn on" id="tbGrid"  title="Toggle grid lines"><span class="material-icons tb-mi">grid_on</span></button>
+          <button class="tb-btn"    id="tbRef"   title="Toggle reference ghost"><span class="material-icons tb-mi">visibility</span></button>
+          <button class="tb-btn"    id="tbNums"  title="Toggle step numbers on cells"><span class="material-icons tb-mi">looks_one</span></button>
+          <button class="tb-btn"    id="tbFill"  title="Fill all steps"><span class="material-icons tb-mi">done_all</span></button>
         </div>
       </div>
 
       <div class="demo-layout">
 
-        <!-- Canvas + floating overlay panel -->
-        <div class="demo-canvas-wrap">
-          <canvas id="demoCanvas"></canvas>
-          <div class="d-overlay">
-            <div class="d-topbar">
-              <span class="d-topbar-lbl">Guide Overlay <span class="d-grid-info" id="dGridInfo">50 × 28</span></span>
-              <button class="d-close" title="Close"><span class="material-icons" style="font-size:14px">close</span></button>
-            </div>
-            <div class="d-body">
-              <div class="d-step-lbl" id="dStepLbl">Step 1 of 7</div>
-              <div class="d-color-row">
-                <div class="d-swatch" id="dSwatch"></div>
-                <div>
-                  <div class="d-color-name" id="dColorName">Sky</div>
-                  <div class="d-pxcount" id="dPxCount">— px</div>
+        <!-- App-style frame: canvas + bottom step bar -->
+        <div class="demo-frame" id="demoFrame">
+
+          <!-- Pixel art canvas with floating overlay -->
+          <div class="demo-canvas-area" id="demoCanvasArea">
+            <canvas id="demoCanvas"></canvas>
+
+            <!-- Floating overlay panel — mirrors app's OverlayGuideService UI -->
+            <div class="d-overlay">
+              <div class="d-topbar">
+                <span class="d-topbar-title">
+                  Guide Overlay
+                  <span class="d-grid-lbl" id="dGridLbl">50 × 28</span>
+                </span>
+                <button class="d-close" id="dClose" title="Toggle overlay">
+                  <span class="material-icons" style="font-size:13px">close</span>
+                </button>
+              </div>
+              <div class="d-body">
+                <div class="d-step-lbl" id="dStepLbl">Step 1 of 7</div>
+                <div class="d-color-row">
+                  <div class="d-swatch" id="dSwatch"></div>
+                  <div>
+                    <div class="d-color-name" id="dColorName">Sky</div>
+                    <div class="d-pxcount"    id="dPxCount">— px</div>
+                  </div>
+                </div>
+                <div class="d-btns">
+                  <button class="d-btn" id="dPrev"><span class="material-icons" style="font-size:15px">chevron_left</span></button>
+                  <button class="d-btn d-btn-play" id="dPlay"><span class="material-icons" style="font-size:15px">play_arrow</span></button>
+                  <button class="d-btn" id="dNext"><span class="material-icons" style="font-size:15px">chevron_right</span></button>
+                </div>
+                <div class="d-togs">
+                  <button class="d-tog on" id="dGrid"><span class="material-icons" style="font-size:13px">grid_on</span></button>
+                  <button class="d-tog"    id="dRef"><span class="material-icons" style="font-size:13px">visibility</span></button>
+                  <button class="d-tog"    id="dReset"><span class="material-icons" style="font-size:13px">refresh</span></button>
                 </div>
               </div>
-              <div class="d-btns">
-                <button class="d-btn" id="dPrev"><span class="material-icons" style="font-size:14px">chevron_left</span></button>
-                <button class="d-btn d-btn-play" id="dPlay"><span class="material-icons" style="font-size:14px">play_arrow</span></button>
-                <button class="d-btn" id="dNext"><span class="material-icons" style="font-size:14px">chevron_right</span></button>
+              <div class="d-track"><div class="d-fill" id="dFill" style="width:0%"></div></div>
+            </div>
+          </div>
+
+          <!-- Bottom guide bar — mirrors app's guide mode bottom controls -->
+          <div class="demo-stepbar">
+            <div class="dsb-track"><div class="dsb-fill" id="dsbFill" style="width:0%"></div></div>
+            <div class="dsb-row">
+              <div class="dsb-color">
+                <div class="dsb-swatch" id="dsbSwatch"></div>
+                <div>
+                  <div class="dsb-name" id="dsbName">Sky</div>
+                  <div class="dsb-step" id="dsbStep">Step 1 of 7</div>
+                </div>
               </div>
-              <div class="d-togs">
-                <button class="d-tog on"  id="dGrid"><span class="material-icons" style="font-size:12px">grid_on</span></button>
-                <button class="d-tog"     id="dRef"><span class="material-icons" style="font-size:12px">visibility</span></button>
-                <button class="d-tog"     id="dReset"><span class="material-icons" style="font-size:12px">refresh</span></button>
+              <div class="dsb-nav">
+                <button class="dsb-btn" id="dsbPrev"><span class="material-icons" style="font-size:19px">chevron_left</span></button>
+                <button class="dsb-btn dsb-play" id="dsbPlay"><span class="material-icons" style="font-size:19px">play_arrow</span></button>
+                <button class="dsb-btn" id="dsbNext"><span class="material-icons" style="font-size:19px">chevron_right</span></button>
               </div>
             </div>
-            <div class="d-track"><div class="d-fill" id="dFill" style="width:0%"></div></div>
           </div>
         </div>
 
-        <!-- Step list -->
-        <div>
-          <div class="demo-steps" id="demoSteps"></div>
-          <p class="demo-hint">Click any step to jump to it. Use the controls above to change aspect ratio, precision, crop mode, and toggle guide/palette modes.</p>
+        <!-- Step list sidebar -->
+        <div class="demo-side">
+          <div id="demoSteps"></div>
+          <p class="demo-hint">Click any step to jump to it.<br>Toggle <strong>Ref</strong> to see the ghost image.<br>Try <strong>Nums</strong> to see step numbers on cells.</p>
         </div>
 
       </div>
@@ -427,34 +492,34 @@
       </div>
       <div class="feat-grid">
         <div class="feat-card">
-          <div class="feat-icon">🖼️</div>
+          <div class="feat-icon"><span class="material-icons">image</span></div>
           <h3>Smart Pixelation</h3>
-          <p>Import any photo and choose your grid precision — the app generates an accurate pixel-art preview locked to your canvas size.</p>
+          <p>Import any photo and choose your grid precision (Small to XL). The app converts it to the exact canvas resolution using the Heartopia 125-color palette.</p>
         </div>
         <div class="feat-card">
-          <div class="feat-icon">🎨</div>
+          <div class="feat-icon"><span class="material-icons">palette</span></div>
           <h3>Color Guide Steps</h3>
-          <p>Pixels grouped by color into numbered steps. Paint one shade at a time with no missed spots and no confusion.</p>
+          <p>Pixels are grouped by color across 13 hue groups and 5–10 tone variants. Paint one shade at a time — no missed spots, no guesswork.</p>
         </div>
         <div class="feat-card">
-          <div class="feat-icon">🔲</div>
+          <div class="feat-icon"><span class="material-icons">layers</span></div>
           <h3>Floating Overlay</h3>
-          <p>A draggable, resizable floating panel that sits on top of any app. Lock it to transparent pass-through while you paint.</p>
+          <p>A draggable, resizable guide panel that floats on top of any app. Lock it to pass-through mode so it doesn't interfere while you paint.</p>
         </div>
         <div class="feat-card">
-          <div class="feat-icon">📐</div>
+          <div class="feat-icon"><span class="material-icons">grid_on</span></div>
           <h3>Grid &amp; Coordinates</h3>
-          <p>Toggle a reference grid with optional pixel coordinate labels so every dot lands in exactly the right place.</p>
+          <p>Toggle a reference grid with pixel coordinate labels so every dot lands in exactly the right place on your canvas.</p>
         </div>
         <div class="feat-card">
-          <div class="feat-icon">🎞️</div>
+          <div class="feat-icon"><span class="material-icons">gif</span></div>
           <h3>GIF Export</h3>
-          <p>Export your guide as a compact animated GIF to share with friends or keep as an offline reference.</p>
+          <p>Export your guide as a compact animated GIF to share with friends or use as an offline step-by-step reference.</p>
         </div>
         <div class="feat-card">
-          <div class="feat-icon">💾</div>
+          <div class="feat-icon"><span class="material-icons">save</span></div>
           <h3>Local First</h3>
-          <p>All guides and previews are saved on your device. No account, no cloud — your art stays yours.</p>
+          <p>All guides, previews, and converted images are saved on your device. No account, no cloud — your art stays private.</p>
         </div>
       </div>
     </div>
@@ -475,32 +540,56 @@
           <ul class="rm-list">
             <li><span class="rm-check">✓</span> Image import from gallery</li>
             <li><span class="rm-check">✓</span> Pixel art conversion (5 aspect ratios)</li>
-            <li><span class="rm-check">✓</span> 4 precision levels (Small to XL)</li>
+            <li><span class="rm-check">✓</span> 4 precision levels (Small → XL)</li>
+            <li><span class="rm-check">✓</span> Fit / Crop / Stretch modes</li>
             <li><span class="rm-check">✓</span> Heartopia 125-color palette</li>
             <li><span class="rm-check">✓</span> Paint-by-numbers guide generation</li>
-            <li><span class="rm-check">✓</span> Floating overlay system</li>
-            <li><span class="rm-check">✓</span> Grid & coordinate display</li>
-            <li><span class="rm-check">✓</span> GIF export with watermark</li>
-            <li><span class="rm-check">✓</span> Local guide saving</li>
+            <li><span class="rm-check">✓</span> Floating overlay with lock &amp; snap</li>
+            <li><span class="rm-check">✓</span> Grid &amp; coordinate display</li>
+            <li><span class="rm-check">✓</span> Animated GIF export</li>
+            <li><span class="rm-check">✓</span> Local guide saving &amp; loading</li>
             <li><span class="rm-check">✓</span> Pre-loaded art gallery</li>
-            <li><span class="rm-check">✓</span> AdMob integration</li>
           </ul>
         </div>
         <div class="rm-section coming">
           <h3><span class="dot"></span> Coming Soon</h3>
           <ul class="rm-list">
             <li><span class="rm-pending">◐</span> Drawing canvas (tap to paint)</li>
-            <li><span class="rm-pending">◐</span> Color palette selection</li>
-            <li><span class="rm-pending">◐</span> PNG/JPEG image export</li>
+            <li><span class="rm-pending">◐</span> Color palette selector</li>
+            <li><span class="rm-pending">◐</span> PNG / JPEG image export</li>
             <li><span class="rm-pending">◐</span> Direct social sharing</li>
-            <li><span class="rm-pending">◐</span> Brush sizes (1x1, 2x2, 3x3)</li>
+            <li><span class="rm-pending">◐</span> Brush sizes (1×1, 2×2, 3×3)</li>
             <li><span class="rm-pending">◐</span> Fill tool for large areas</li>
-            <li><span class="rm-pending">◐</span> Undo/redo history</li>
-            <li><span class="rm-pending">◐</span> Custom overlay images</li>
+            <li><span class="rm-pending">◐</span> Undo / redo history</li>
+            <li><span class="rm-pending">◐</span> Custom overlay image</li>
             <li><span class="rm-pending">◐</span> Layer support</li>
             <li><span class="rm-pending">◐</span> Custom color palettes</li>
-            <li><span class="rm-pending">◐</span> User accounts & cloud sync</li>
+            <li><span class="rm-pending">◐</span> User accounts &amp; cloud sync</li>
           </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="div">
+
+  <!-- EARLY TESTER FORM -->
+  <section class="feedback-sec" id="feedback">
+    <div class="shell">
+      <div class="sh">
+        <h2>Early Tester Application</h2>
+        <p>Apply to get early access to PaintTopia before the public release. Limited spots available.</p>
+      </div>
+      <div class="form-card" style="text-align:center">
+        <p style="color:var(--muted);margin:0 0 20px">Fill out the form below to apply for early access. Limited spots available.</p>
+        <button class="btn btn-accent" id="showFormBtn" onclick="document.getElementById('gform-wrap').style.display='block';this.style.display='none'">
+          <span class="material-icons" style="vertical-align:middle;margin-right:6px;font-size:18px">edit_note</span>Open Application Form
+        </button>
+        <div id="gform-wrap" style="display:none;margin-top:20px">
+          <iframe
+            src="https://docs.google.com/forms/d/e/1FAIpQLSfsT2dUdSQAfICXzONtWUmUEtDl4ImdPxP4epUcgP4hNRhdvQ/viewform?embedded=true"
+            width="100%" height="860" frameborder="0" marginheight="0" marginwidth="0"
+            style="border:none;border-radius:4px;display:block">Loading…</iframe>
         </div>
       </div>
     </div>
@@ -523,13 +612,14 @@
   </footer>
 
   <script>
-    /* ════════════════════════════════════════════════════════
-       PIXEL ART DEMO — Night house scene (16 × 12 grid)
-       ════════════════════════════════════════════════════════ */
+    /* ═══════════════════════════════════════════════════════════════
+       PAINTOPIA CANVAS GUIDE DEMO
+       Simulates the app's guide mode + floating overlay panel UI.
+       ═══════════════════════════════════════════════════════════════ */
 
+    // ── Pixel art data: 16-wide × 12-tall night house scene ──────────
     const COLS = 16, ROWS = 12;
 
-    // Color palette — index matches ART cell values
     const COLORS = [
       '#0a1628',  // 0 Sky
       '#f0a42b',  // 1 Moon
@@ -541,9 +631,8 @@
     ];
     const NAMES = ['Sky', 'Moon', 'Stars', 'Roof', 'House', 'Windows', 'Snow'];
 
-    // 16-wide × 12-tall pixel art
     const ART = [
-      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],  // 0
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],  // 0 – sky
       [0,0,2,0,0,0,1,1,1,0,0,0,2,0,0,0],  // 1 – stars + moon top
       [0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0],  // 2 – moon
       [0,0,0,2,0,1,1,1,1,1,0,0,0,0,2,0],  // 3 – moon + stars
@@ -566,31 +655,55 @@
       ),
     }));
 
-    /* ── State ──────────────────────────────────────────── */
-    let cur      = 0;
-    const done   = new Set();
-    let showGrid = true;
-    let showRef  = false;
-    let playing  = false;
-    let timer    = null;
-    let glow     = 0;
-    let CELL     = 28;
+    // Precision → cell pixel size + grid label
+    const PRECISION = {
+      small:  { cell: 40, label: ['30','18'],  '4:3': ['30','24'],  '1:1': ['30','30']  },
+      medium: { cell: 30, label: ['50','28'],  '4:3': ['50','38'],  '1:1': ['50','50']  },
+      large:  { cell: 22, label: ['100','56'], '4:3': ['100','76'], '1:1': ['100','100'] },
+      xlarge: { cell: 16, label: ['150','84'], '4:3': ['150','114'],'1:1': ['150','150'] },
+    };
 
-    /* ── Canvas ─────────────────────────────────────────── */
+    // ── State ────────────────────────────────────────────────────────
+    let cur       = 0;
+    const done    = new Set();
+    let showGrid  = true;
+    let showRef   = false;
+    let numsMode  = false;
+    let fillAll   = false;
+    let playing   = false;
+    let timer     = null;
+    let glow      = 0;
+    let CELL      = 30;
+    let precision = 'small';
+    let aspect    = '16:9';
+
+    // ── Canvas setup ─────────────────────────────────────────────────
     const canvas = document.getElementById('demoCanvas');
     const ctx    = canvas.getContext('2d');
 
-    function setSize() {
-      const wrap  = canvas.parentElement;
-      const avail = Math.min(window.innerWidth <= 760
-        ? window.innerWidth - 44
-        : 480, 480);
-      CELL = Math.max(18, Math.floor(avail / COLS));
-      canvas.width  = COLS * CELL;
-      canvas.height = ROWS * CELL;
+    function getGridLabel() {
+      const pc = PRECISION[precision];
+      const pair = (aspect === '4:3' ? pc['4:3'] : aspect === '1:1' ? pc['1:1'] : pc.label);
+      return pair[0] + ' × ' + pair[1];
     }
 
-    /* ── Render ─────────────────────────────────────────── */
+    function applySize() {
+      const frame = document.getElementById('demoFrame');
+      const area  = document.getElementById('demoCanvasArea');
+      const isMobile = window.innerWidth <= 800;
+      const maxPx = isMobile
+        ? Math.min(window.innerWidth - 40, 420)
+        : Math.min(520, window.innerWidth - 240);
+      const targetCell = PRECISION[precision].cell;
+      CELL = Math.min(targetCell, Math.floor(maxPx / COLS));
+      CELL = Math.max(14, CELL);
+      canvas.width  = COLS * CELL;
+      canvas.height = ROWS * CELL;
+      frame.style.width = canvas.width + 'px';
+      document.getElementById('dGridLbl').textContent = getGridLabel();
+    }
+
+    // ── Render ───────────────────────────────────────────────────────
     function render() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -598,37 +711,63 @@
       ctx.fillStyle = '#060a10';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Reference ghost
-      if (showRef) {
+      if (fillAll) {
+        // Show all cells at full opacity
         ART.forEach((row, r) => row.forEach((v, c) => {
-          ctx.globalAlpha = 0.2;
-          ctx.fillStyle   = COLORS[v];
-          ctx.fillRect(c * CELL, r * CELL, CELL, CELL);
-        }));
-        ctx.globalAlpha = 1;
-      }
-
-      // Completed steps
-      ART.forEach((row, r) => row.forEach((v, c) => {
-        if (done.has(v)) {
           ctx.fillStyle = COLORS[v];
           ctx.fillRect(c * CELL, r * CELL, CELL, CELL);
-        }
-      }));
-
-      // Active step highlight
-      if (!done.has(cur)) {
-        const pulse = 0.5 + 0.5 * Math.sin(glow);
-        steps[cur].cells.forEach(({ r, c }) => {
-          ctx.globalAlpha = 0.55 + 0.38 * pulse;
-          ctx.fillStyle   = steps[cur].color;
-          ctx.fillRect(c * CELL, r * CELL, CELL, CELL);
+        }));
+      } else {
+        // Reference ghost
+        if (showRef) {
+          ART.forEach((row, r) => row.forEach((v, c) => {
+            ctx.globalAlpha = 0.2;
+            ctx.fillStyle   = COLORS[v];
+            ctx.fillRect(c * CELL, r * CELL, CELL, CELL);
+          }));
           ctx.globalAlpha = 1;
+        }
 
-          ctx.strokeStyle = `rgba(255,255,255,${0.3 + 0.6 * pulse})`;
-          ctx.lineWidth   = 1.5;
-          ctx.strokeRect(c * CELL + 0.75, r * CELL + 0.75, CELL - 1.5, CELL - 1.5);
-        });
+        // Completed steps
+        ART.forEach((row, r) => row.forEach((v, c) => {
+          if (done.has(v)) {
+            ctx.fillStyle = COLORS[v];
+            ctx.fillRect(c * CELL, r * CELL, CELL, CELL);
+          }
+        }));
+
+        // Active step highlight (pulsing)
+        if (!done.has(cur)) {
+          const pulse = 0.5 + 0.5 * Math.sin(glow);
+          steps[cur].cells.forEach(({ r, c }) => {
+            ctx.globalAlpha = 0.55 + 0.38 * pulse;
+            ctx.fillStyle   = steps[cur].color;
+            ctx.fillRect(c * CELL, r * CELL, CELL, CELL);
+            ctx.globalAlpha = 1;
+            ctx.strokeStyle = `rgba(255,255,255,${0.28 + 0.62 * pulse})`;
+            ctx.lineWidth   = 1.5;
+            ctx.strokeRect(c * CELL + 0.75, r * CELL + 0.75, CELL - 1.5, CELL - 1.5);
+          });
+        }
+      }
+
+      // Numbers mode: draw step index on visible cells
+      if (numsMode) {
+        const fs = Math.max(8, Math.floor(CELL * 0.38));
+        ctx.font          = `bold ${fs}px sans-serif`;
+        ctx.textAlign     = 'center';
+        ctx.textBaseline  = 'middle';
+        ART.forEach((row, r) => row.forEach((v, c) => {
+          const visible = fillAll || done.has(v) || (!done.has(cur) && v === cur);
+          if (visible) {
+            const cx = c * CELL + CELL / 2;
+            const cy = r * CELL + CELL / 2;
+            ctx.fillStyle = 'rgba(0,0,0,0.65)';
+            ctx.fillText(v + 1, cx + 1, cy + 1);
+            ctx.fillStyle = '#fff';
+            ctx.fillText(v + 1, cx, cy);
+          }
+        }));
       }
 
       // Grid lines
@@ -646,18 +785,32 @@
 
     function loop() { glow += 0.055; render(); requestAnimationFrame(loop); }
 
-    /* ── Panel & list updates ───────────────────────────── */
-    function syncPanel() {
+    // ── Sync UI (overlay panel + bottom bar + step list) ─────────────
+    function syncAll() {
       const s = steps[cur];
-      document.getElementById('dStepLbl').textContent    = `Step ${cur + 1} of ${steps.length}`;
-      document.getElementById('dSwatch').style.background = s.color;
-      document.getElementById('dColorName').textContent  = s.name;
-      document.getElementById('dPxCount').textContent    = `${s.cells.length} pixels`;
-      document.getElementById('dFill').style.width       = `${(done.size / steps.length) * 100}%`;
-      const playBtn = document.getElementById('dPlay');
-      playBtn.innerHTML = playing 
-        ? '<span class="material-icons" style="font-size:14px">pause</span>' 
-        : '<span class="material-icons" style="font-size:14px">play_arrow</span>';
+      const prog = `${(done.size / steps.length * 100).toFixed(0)}%`;
+      const stepTxt = `Step ${cur + 1} of ${steps.length}`;
+
+      // Overlay panel
+      document.getElementById('dStepLbl').textContent     = stepTxt;
+      document.getElementById('dSwatch').style.background  = s.color;
+      document.getElementById('dColorName').textContent   = s.name;
+      document.getElementById('dPxCount').textContent     = `${s.cells.length} pixels`;
+      document.getElementById('dFill').style.width        = prog;
+      document.getElementById('dGridLbl').textContent     = getGridLabel();
+
+      // Bottom bar
+      document.getElementById('dsbSwatch').style.background = s.color;
+      document.getElementById('dsbName').textContent        = s.name;
+      document.getElementById('dsbStep').textContent        = stepTxt;
+      document.getElementById('dsbFill').style.width        = prog;
+
+      // Play icons
+      const playIcon = playing ? 'pause' : 'play_arrow';
+      document.getElementById('dPlay').innerHTML    = `<span class="material-icons" style="font-size:15px">${playIcon}</span>`;
+      document.getElementById('dsbPlay').innerHTML  = `<span class="material-icons" style="font-size:19px">${playIcon}</span>`;
+
+      buildList();
     }
 
     function buildList() {
@@ -665,135 +818,136 @@
       el.innerHTML = '';
       steps.forEach((s, i) => {
         const div = document.createElement('div');
-        div.className = 'ds-item' + (i === cur ? ' current' : '') + (done.has(i) ? ' done' : '');
+        div.className = 'ds-item' + (i === cur ? ' cur' : '') + (done.has(i) ? ' done' : '');
         div.innerHTML =
-          `<div class="ds-swatch" style="background:${s.color}"></div>` +
-          `<span class="ds-name">${s.name}</span>` +
-          `<span class="ds-count">${s.cells.length}px</span>` +
-          (done.has(i) ? `<span class="ds-tick">✓</span>` : '');
+          `<div class="ds-sw" style="background:${s.color}"></div>` +
+          `<span class="ds-nm">${s.name}</span>` +
+          `<span class="ds-ct">${s.cells.length}px</span>` +
+          (done.has(i) ? `<span class="ds-tk">✓</span>` : '');
         div.addEventListener('click', () => {
           stopPlay();
           for (let k = 0; k < i; k++) done.add(k);
           for (let k = i; k < steps.length; k++) done.delete(k);
           cur = i;
-          syncPanel(); buildList();
+          syncAll();
         });
         el.appendChild(div);
       });
     }
 
-    /* ── Navigation ─────────────────────────────────────── */
+    // ── Navigation ───────────────────────────────────────────────────
     function advance() {
       done.add(cur);
       if (cur < steps.length - 1) { cur++; }
       else { stopPlay(); }
-      syncPanel(); buildList();
+      syncAll();
     }
 
     function back() {
-      if (cur > 0) { done.delete(cur - 1); cur--; syncPanel(); buildList(); }
+      if (cur > 0) { done.delete(cur - 1); cur--; syncAll(); }
     }
 
     function reset() {
-      stopPlay(); cur = 0; done.clear(); syncPanel(); buildList();
+      stopPlay(); cur = 0; done.clear(); syncAll();
     }
 
     function startPlay() {
       if (cur === steps.length - 1 && done.has(cur)) reset();
-      playing = true; syncPanel();
+      playing = true; syncAll();
       timer = setInterval(advance, 1300);
     }
 
     function stopPlay() {
-      playing = false; clearInterval(timer); timer = null; syncPanel();
+      playing = false; clearInterval(timer); timer = null; syncAll();
     }
 
-    /* ── Wiring ─────────────────────────────────────────── */
-    document.getElementById('dPlay').addEventListener('click',  () => playing ? stopPlay() : startPlay());
+    function togglePlay() { playing ? stopPlay() : startPlay(); }
+
+    // ── Wiring: overlay panel ─────────────────────────────────────────
+    document.getElementById('dPlay').addEventListener('click',  togglePlay);
     document.getElementById('dNext').addEventListener('click',  () => { stopPlay(); advance(); });
     document.getElementById('dPrev').addEventListener('click',  () => { stopPlay(); back(); });
+
+    const dGridBtn = document.getElementById('dGrid');
+    dGridBtn.addEventListener('click', () => {
+      showGrid = !showGrid;
+      dGridBtn.classList.toggle('on', showGrid);
+      document.getElementById('tbGrid').classList.toggle('on', showGrid);
+    });
+
+    const dRefBtn = document.getElementById('dRef');
+    dRefBtn.addEventListener('click', () => {
+      showRef = !showRef;
+      dRefBtn.classList.toggle('on', showRef);
+      document.getElementById('tbRef').classList.toggle('on', showRef);
+    });
+
     document.getElementById('dReset').addEventListener('click', reset);
 
-    const gridBtn = document.getElementById('dGrid');
-    gridBtn.addEventListener('click', () => { showGrid = !showGrid; gridBtn.classList.toggle('on', showGrid); });
+    // Toggle overlay visibility via close button
+    document.getElementById('dClose').addEventListener('click', () => {
+      const ov = document.querySelector('.d-overlay');
+      ov.style.display = ov.style.display === 'none' ? '' : 'none';
+    });
 
-    const refBtn = document.getElementById('dRef');
-    refBtn.addEventListener('click', () => { showRef = !showRef; refBtn.classList.toggle('on', showRef); });
+    // ── Wiring: bottom bar ────────────────────────────────────────────
+    document.getElementById('dsbPlay').addEventListener('click', togglePlay);
+    document.getElementById('dsbNext').addEventListener('click', () => { stopPlay(); advance(); });
+    document.getElementById('dsbPrev').addEventListener('click', () => { stopPlay(); back(); });
 
-    /* ── Demo controls ─────────────────────────────────── */
-    // State for demo controls
-    let demoState = {
-      aspect: '16:9',
-      precision: 'medium',
-      crop: 'crop',
-      palette: true,
-      guide: false,
-      showAll: false,
-      numsOnly: false
-    };
+    // ── Wiring: toolbar ───────────────────────────────────────────────
+    document.getElementById('tbGrid').addEventListener('click', (e) => {
+      showGrid = !showGrid;
+      e.currentTarget.classList.toggle('on', showGrid);
+      document.getElementById('dGrid').classList.toggle('on', showGrid);
+    });
 
-    // Grid sizes per precision
-    const GRID_SIZES = {
-      '16:9': { small: [30, 18], medium: [50, 28], large: [100, 56], xlarge: [150, 84] },
-      '4:3':  { small: [30, 24], medium: [50, 38], large: [100, 76], xlarge: [150, 114] },
-      '1:1':  { small: [30, 30], medium: [50, 50], large: [100, 100], xlarge: [150, 150] },
-    };
+    document.getElementById('tbRef').addEventListener('click', (e) => {
+      showRef = !showRef;
+      e.currentTarget.classList.toggle('on', showRef);
+      document.getElementById('dRef').classList.toggle('on', showRef);
+    });
 
-    function updateDemoGrid() {
-      const sizes = GRID_SIZES[demoState.aspect] || GRID_SIZES['16:9'];
-      const grid = sizes[demoState.precision] || sizes.medium;
-      // Update the display to show current settings
-      document.getElementById('dGridInfo').textContent = `${grid[0]} × ${grid[1]}`;
-    }
+    document.getElementById('tbNums').addEventListener('click', (e) => {
+      numsMode = !numsMode;
+      e.currentTarget.classList.toggle('on', numsMode);
+    });
 
-    // Handle control button clicks
-    document.querySelectorAll('.ctrl-btn').forEach(btn => {
+    document.getElementById('tbFill').addEventListener('click', (e) => {
+      fillAll = !fillAll;
+      e.currentTarget.classList.toggle('on', fillAll);
+      if (fillAll) stopPlay();
+    });
+
+    // Precision group
+    document.querySelectorAll('[data-ctrl="precision"]').forEach(btn => {
       btn.addEventListener('click', () => {
-        const ctrl = btn.dataset.ctrl;
-        if (!ctrl) return;
-
-        // Handle group controls (aspect, precision, crop)
-        if (ctrl === 'aspect' || ctrl === 'precision' || ctrl === 'crop') {
-          const group = btn.parentElement.querySelectorAll('.ctrl-btn');
-          group.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-
-          if (ctrl === 'aspect') demoState.aspect = btn.title;
-          if (ctrl === 'precision') demoState.precision = btn.title.toLowerCase();
-          if (ctrl === 'crop') demoState.crop = btn.title.toLowerCase();
-          updateDemoGrid();
-          return;
-        }
-
-        // Handle toggle controls
-        btn.classList.toggle('active');
-
-        if (ctrl === 'palette') {
-          demoState.palette = btn.classList.contains('active');
-        } else if (ctrl === 'guide') {
-          demoState.guide = btn.classList.contains('active');
-          // Toggle guide mode in the overlay
-          const guideOverlay = document.querySelector('.d-overlay');
-          if (guideOverlay) {
-            guideOverlay.style.display = demoState.guide ? 'block' : 'none';
-          }
-        } else if (ctrl === 'showall') {
-          demoState.showAll = btn.classList.contains('active');
-          if (demoState.showAll && !playing) startPlay();
-        } else if (ctrl === 'nums') {
-          demoState.numsOnly = btn.classList.contains('active');
-        }
+        document.querySelectorAll('[data-ctrl="precision"]').forEach(b => b.classList.remove('on'));
+        btn.classList.add('on');
+        precision = btn.dataset.val;
+        applySize();
+        syncAll();
       });
     });
 
-    /* ── Responsive ─────────────────────────────────────── */
-    window.addEventListener('resize', () => { setSize(); });
+    // Aspect ratio group
+    document.querySelectorAll('[data-ctrl="aspect"]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-ctrl="aspect"]').forEach(b => b.classList.remove('on'));
+        btn.classList.add('on');
+        aspect = btn.dataset.val;
+        syncAll();
+      });
+    });
 
-    /* ── Boot ───────────────────────────────────────────── */
-    setSize();
-    buildList();
-    syncPanel();
+    // ── Responsive ────────────────────────────────────────────────────
+    window.addEventListener('resize', applySize);
+
+    // ── Boot ─────────────────────────────────────────────────────────
+    applySize();
+    syncAll();
     loop();
   </script>
+
 </body>
 </html>

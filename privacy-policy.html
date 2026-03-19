@@ -6,130 +6,47 @@
   <title>PaintTopia Privacy Policy</title>
   <style>
     :root {
-      --bg: #0f0905;
-      --panel: #1a0f08;
-      --panel-2: #24150c;
-      --line: #6c4522;
-      --text: #f3e5cf;
-      --muted: #c8a77f;
+      --bg:     #0f0905;
+      --panel:  #1a0f08;
+      --panel2: #24150c;
+      --line:   #6c4522;
+      --text:   #f3e5cf;
+      --muted:  #c8a77f;
       --accent: #f0a42b;
-      --accent-2: #5bb7ff;
-      --max: 920px;
+      --blue:   #5bb7ff;
+      --max:    920px;
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       background:
-        radial-gradient(circle at top center, rgba(91, 183, 255, 0.16), transparent 32%),
+        radial-gradient(circle at top center, rgba(91,183,255,0.16), transparent 32%),
         linear-gradient(180deg, #140b06 0%, var(--bg) 100%);
       color: var(--text);
       line-height: 1.7;
     }
-
-    .shell {
-      width: min(var(--max), calc(100% - 32px));
-      margin: 0 auto;
-      padding: 40px 0 64px;
-    }
-
+    .shell { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; padding: 40px 0 64px; }
     .hero {
-      background: linear-gradient(180deg, rgba(36, 21, 12, 0.95), rgba(21, 12, 7, 0.95));
+      background: linear-gradient(180deg, rgba(36,21,12,0.95), rgba(21,12,7,0.95));
       border: 1px solid var(--line);
       padding: 28px 24px;
-      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+      box-shadow: 0 18px 48px rgba(0,0,0,0.28);
     }
-
-    .eyebrow {
-      margin: 0 0 10px;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--muted);
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(28px, 4vw, 44px);
-      line-height: 1.1;
-      color: white;
-    }
-
-    .hero p {
-      margin: 14px 0 0;
-      color: var(--muted);
-      max-width: 760px;
-    }
-
-    .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .chip {
-      display: inline-flex;
-      align-items: center;
-      min-height: 34px;
-      padding: 0 12px;
-      border: 1px solid var(--line);
-      background: var(--panel-2);
-      color: var(--text);
-      font-size: 14px;
-    }
-
-    .section {
-      margin-top: 18px;
-      background: rgba(26, 15, 8, 0.92);
-      border: 1px solid rgba(108, 69, 34, 0.9);
-      padding: 24px;
-    }
-
-    h2 {
-      margin: 0 0 12px;
-      font-size: 24px;
-      color: white;
-    }
-
-    h3 {
-      margin: 20px 0 10px;
-      font-size: 18px;
-      color: var(--accent);
-    }
-
-    p {
-      margin: 0 0 12px;
-    }
-
-    ul {
-      margin: 0 0 14px 18px;
-      padding: 0;
-    }
-
-    li + li {
-      margin-top: 6px;
-    }
-
-    a {
-      color: var(--accent-2);
-    }
-
-    .note {
-      border-left: 3px solid var(--accent);
-      padding-left: 12px;
-      color: var(--muted);
-    }
-
-    .footer {
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 14px;
-    }
+    .eyebrow { margin: 0 0 10px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); }
+    h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.1; color: white; }
+    .hero p { margin: 14px 0 0; color: var(--muted); max-width: 760px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .chip { display: inline-flex; align-items: center; min-height: 34px; padding: 0 12px; border: 1px solid var(--line); background: var(--panel2); color: var(--text); font-size: 14px; }
+    .section { margin-top: 18px; background: rgba(26,15,8,0.92); border: 1px solid rgba(108,69,34,0.9); padding: 24px; }
+    h2 { margin: 0 0 12px; font-size: 24px; color: white; }
+    h3 { margin: 20px 0 10px; font-size: 18px; color: var(--accent); }
+    p  { margin: 0 0 12px; }
+    ul { margin: 0 0 14px 18px; padding: 0; }
+    li + li { margin-top: 6px; }
+    a { color: var(--blue); }
+    .note { border-left: 3px solid var(--accent); padding-left: 12px; color: var(--muted); }
+    .footer { margin-top: 18px; color: var(--muted); font-size: 14px; }
   </style>
 </head>
 <body>
@@ -151,58 +68,76 @@
     <section class="section">
       <h2>1. Overview</h2>
       <p>
-        PaintTopia is a pixel-art guide and drawing helper app. Users can import images, generate
-        pixel previews, create step-by-step color guides, save local guide files, export guide GIFs,
-        and use a floating overlay guide for tracing workflows.
+        PaintTopia is a pixel art conversion and guide tool for Android. Users can browse a
+        pre-loaded gallery of pixel art examples, import their own photos to convert into pixel art
+        using the Heartopia 125-color palette, generate step-by-step paint-by-numbers guides,
+        export guide animations as animated GIF files, and use a floating overlay guide for
+        tracing reference while drawing in other apps.
       </p>
       <p class="note">
         PaintTopia does not require user account registration to use its core features.
+        Sign-in options shown in the app are placeholders for a future feature and are not
+        currently functional.
+      </p>
+      <p class="note">
+        PaintTopia is a guide and reference tool. It does not currently include drawing or
+        pixel-editing tools within the app itself.
       </p>
     </section>
 
     <section class="section">
       <h2>2. Information We Process</h2>
 
-      <h3>Images you choose</h3>
+      <h3>Images you import</h3>
       <p>
-        When you upload or import an image, the app processes that image locally on your device to
-        generate pixel-art previews, guide steps, saved guides, and GIF exports.
+        When you import a photo from your gallery, the app processes that image entirely on your
+        device to generate pixel-art previews, guide steps, saved guides, and GIF exports.
+        Your images are never transmitted to any server operated by PaintTopia.
       </p>
 
-      <h3>Locally stored guide data</h3>
+      <h3>Pre-loaded gallery</h3>
       <p>
-        PaintTopia can store generated guide data, preview images, source images, and guide metadata
-        locally on your device so that you can reopen previous work later.
+        The Explore tab displays a pre-loaded collection of pixel art examples. This content is
+        bundled with the app and does not involve uploading or collecting images from users.
+      </p>
+
+      <h3>Locally saved guide data</h3>
+      <p>
+        PaintTopia stores generated guide data, preview images, source images, and guide metadata
+        locally on your device so that you can reopen previous work. This data is only accessible
+        within PaintTopia unless you manually share or export it.
       </p>
 
       <h3>Support emails</h3>
       <p>
-        If you use the in-app report/contact feature, PaintTopia opens your email app with a
-        prefilled template. The email you send is handled by your chosen email provider.
+        If you use the in-app report or contact feature, PaintTopia opens your email app with a
+        prefilled template. The email you send is handled by your chosen email provider and is
+        not processed by PaintTopia directly.
       </p>
     </section>
 
     <section class="section">
       <h2>3. Information Collected by Third Parties</h2>
       <p>
-        PaintTopia uses Google AdMob to display ads. As part of ad delivery, Google and its partners
-        may collect or process certain device, advertising, diagnostics, and app interaction data in
-        accordance with their own privacy policies.
+        PaintTopia uses Google AdMob to display ads. As part of ad delivery, Google and its
+        partners may collect or process device identifiers, advertising IDs, diagnostics, and
+        app interaction data in accordance with their own privacy policies.
       </p>
       <p>
-        To learn more about how Google handles data for ads, please review Google&apos;s own policies
-        and privacy information.
+        To learn more about how Google handles data for ads, please review Google&apos;s privacy
+        policies and their Ads &amp; data controls documentation.
       </p>
     </section>
 
     <section class="section">
       <h2>4. How We Use Information</h2>
       <ul>
-        <li>Generate pixel-art previews and guide steps.</li>
-        <li>Save and restore local artwork progress.</li>
-        <li>Export guide animations as GIF files.</li>
-        <li>Enable floating overlay guide features.</li>
-        <li>Support in-app ads through AdMob.</li>
+        <li>Convert imported photos into pixel-art previews at the chosen grid resolution.</li>
+        <li>Generate step-by-step color guide sequences from pixel data.</li>
+        <li>Save and restore local guide files and preview images.</li>
+        <li>Export guide animations as GIF files for sharing or offline reference.</li>
+        <li>Enable the floating overlay guide for tracing in other apps.</li>
+        <li>Display in-app advertising through Google AdMob.</li>
         <li>Help users contact support through their mail app.</li>
       </ul>
     </section>
@@ -212,56 +147,86 @@
 
       <h3>Internet and network state</h3>
       <p>
-        PaintTopia uses network-related permissions for ad delivery and connectivity handling.
+        PaintTopia uses network-related permissions for ad delivery via AdMob and to check
+        network connectivity.
       </p>
 
       <h3>Draw over other apps</h3>
       <p>
-        PaintTopia includes an optional floating overlay guide. This feature requires draw-over-apps
-        permission and is only used if the user explicitly enables and launches the overlay guide.
+        PaintTopia includes an optional floating overlay guide. This feature requires the
+        draw-over-apps (SYSTEM_ALERT_WINDOW) permission and is only active if the user
+        explicitly enables and launches the overlay. The overlay displays a reference guide
+        image over other apps; it does not capture or record the screen content of other apps.
+      </p>
+
+      <h3>Screen recording prevention</h3>
+      <p>
+        PaintTopia applies the FLAG_SECURE window flag to prevent screenshots and screen
+        recordings of the app&apos;s own content. This is a security measure and does not
+        affect other apps on your device.
+      </p>
+
+      <h3>No storage or camera permission</h3>
+      <p>
+        PaintTopia does not request READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, or camera
+        permissions. Images are accessed through the system file picker, which does not require
+        broad storage access. GIF exports are written to the app&apos;s private storage directory.
       </p>
     </section>
 
     <section class="section">
       <h2>6. Data Storage</h2>
       <p>
-        User-generated guide files, preview files, exported GIFs, and saved source images are stored
-        locally on the device unless the user manually shares or exports them elsewhere.
+        All user-generated guide files, pixel-art previews, source images used for conversion,
+        and exported GIFs are stored locally on the device in the app&apos;s private data directory.
+        This data is not accessible to other apps without the user manually sharing it.
       </p>
       <p>
-        PaintTopia does not currently operate its own cloud account system for syncing user artwork.
+        PaintTopia does not operate a cloud account system. There is no network sync or remote
+        backup of guide data.
       </p>
     </section>
 
     <section class="section">
       <h2>7. Data Sharing</h2>
       <p>
-        PaintTopia does not sell your personal images or saved guide files. However, third-party ad
-        services such as AdMob may process data needed to serve ads according to their own terms.
+        PaintTopia does not sell your personal images, guide files, or any user-generated content.
+        The only third party that may receive data related to your device is Google AdMob, which
+        handles ad delivery according to its own terms and privacy policies.
       </p>
     </section>
 
     <section class="section">
       <h2>8. Children&apos;s Privacy</h2>
       <p>
-        PaintTopia is not designed specifically for children. If you are a parent or guardian and
-        believe a child has provided information through the app in a way that concerns you, please
-        contact us.
+        PaintTopia is not designed specifically for children under the age of 13. If you are a
+        parent or guardian and believe a child has provided personal information through the app
+        in a way that concerns you, please contact us at the address below.
       </p>
     </section>
 
     <section class="section">
       <h2>9. Your Choices</h2>
       <ul>
-        <li>You can uninstall the app at any time.</li>
-        <li>You can clear app storage to remove locally saved guides and app data.</li>
-        <li>You can choose whether to grant draw-over-apps permission for the overlay guide.</li>
+        <li>You can uninstall the app at any time to remove all app data from your device.</li>
+        <li>You can clear app storage in Android Settings to remove locally saved guides and data.</li>
+        <li>You can choose whether to grant draw-over-apps permission for the overlay guide feature.</li>
+        <li>You can opt out of personalised advertising through your device&apos;s Google Ads settings.</li>
         <li>You can choose whether to use the in-app support email flow.</li>
       </ul>
     </section>
 
     <section class="section">
-      <h2>10. Contact</h2>
+      <h2>10. Changes to This Policy</h2>
+      <p>
+        This Privacy Policy may be updated when new features are added to PaintTopia. Any
+        material changes will be reflected in an updated effective date. We encourage you to
+        review this page periodically.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>11. Contact</h2>
       <p>
         If you have questions about this Privacy Policy or about PaintTopia, contact:
       </p>
@@ -271,7 +236,8 @@
     </section>
 
     <p class="footer">
-      This page is intended for GitHub Pages publishing and Play Console privacy-policy submission use.
+      This page is published via GitHub Pages and used for Play Console privacy-policy submission.
+      &mdash; <a href="index.html">Back to PaintTopia</a>
     </p>
   </main>
 </body>
