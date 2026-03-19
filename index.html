@@ -192,7 +192,9 @@
 
     @media (max-width: 800px) {
       .demo-layout { flex-direction: column; }
-      .demo-frame { width: 100% !important; }
+      .demo-frame { width: 100% !important; overflow-x: hidden; }
+      .demo-canvas-area { overflow: hidden; }
+      #demoCanvas { display: block; max-width: 100%; margin: 0 auto; }
       .demo-side { flex-direction: row; flex-wrap: wrap; }
       .ds-item { flex: 1 1 120px; }
       .demo-toolbar { border-radius: 2px 2px 0 0; }
@@ -311,10 +313,9 @@
     <div class="nav-in">
       <a class="nav-logo" href="#">PaintTopia</a>
       <div class="nav-links">
-        <a href="#demo">Demo</a>
+        <a href="#feedback">Apply</a>
         <a href="#features">Features</a>
         <a href="#roadmap">Roadmap</a>
-        <a href="#feedback">Feedback</a>
         <a href="privacy-policy.html">Privacy</a>
       </div>
     </div>
@@ -366,6 +367,30 @@
           <div class="how-num">Step 03</div>
           <h3>Trace with Overlay</h3>
           <p>Float the guide overlay on top of Heartopia or any drawing app. Lock it to pass-through mode and trace each pixel without leaving the game.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="div">
+
+  <!-- EARLY TESTER FORM -->
+  <section class="feedback-sec" id="feedback">
+    <div class="shell">
+      <div class="sh">
+        <h2>Early Tester Application</h2>
+        <p>Apply to get early access to PaintTopia before the public release. Limited spots available.</p>
+      </div>
+      <div class="form-card" style="text-align:center">
+        <p style="color:var(--muted);margin:0 0 20px">Fill out the form below to apply for early access. Limited spots available.</p>
+        <button class="btn btn-accent" id="showFormBtn" onclick="document.getElementById('gform-wrap').style.display='block';this.style.display='none'">
+          <span class="material-icons" style="vertical-align:middle;margin-right:6px;font-size:18px">edit_note</span>Open Application Form
+        </button>
+        <div id="gform-wrap" style="display:none;margin-top:20px">
+          <iframe
+            src="https://docs.google.com/forms/d/e/1FAIpQLSfsT2dUdSQAfICXzONtWUmUEtDl4ImdPxP4epUcgP4hNRhdvQ/viewform?embedded=true"
+            width="100%" height="860" frameborder="0" marginheight="0" marginwidth="0"
+            style="border:none;border-radius:4px;display:block">Loading…</iframe>
         </div>
       </div>
     </div>
@@ -573,30 +598,6 @@
 
   <hr class="div">
 
-  <!-- EARLY TESTER FORM -->
-  <section class="feedback-sec" id="feedback">
-    <div class="shell">
-      <div class="sh">
-        <h2>Early Tester Application</h2>
-        <p>Apply to get early access to PaintTopia before the public release. Limited spots available.</p>
-      </div>
-      <div class="form-card" style="text-align:center">
-        <p style="color:var(--muted);margin:0 0 20px">Fill out the form below to apply for early access. Limited spots available.</p>
-        <button class="btn btn-accent" id="showFormBtn" onclick="document.getElementById('gform-wrap').style.display='block';this.style.display='none'">
-          <span class="material-icons" style="vertical-align:middle;margin-right:6px;font-size:18px">edit_note</span>Open Application Form
-        </button>
-        <div id="gform-wrap" style="display:none;margin-top:20px">
-          <iframe
-            src="https://docs.google.com/forms/d/e/1FAIpQLSfsT2dUdSQAfICXzONtWUmUEtDl4ImdPxP4epUcgP4hNRhdvQ/viewform?embedded=true"
-            width="100%" height="860" frameborder="0" marginheight="0" marginwidth="0"
-            style="border:none;border-radius:4px;display:block">Loading…</iframe>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="div">
-
   <!-- FOOTER -->
   <footer>
     <div class="shell">
@@ -689,7 +690,6 @@
 
     function applySize() {
       const frame = document.getElementById('demoFrame');
-      const area  = document.getElementById('demoCanvasArea');
       const isMobile = window.innerWidth <= 800;
       const maxPx = isMobile
         ? Math.min(window.innerWidth - 40, 420)
@@ -699,7 +699,8 @@
       CELL = Math.max(14, CELL);
       canvas.width  = COLS * CELL;
       canvas.height = ROWS * CELL;
-      frame.style.width = canvas.width + 'px';
+      // On mobile let CSS handle width (100%); on desktop constrain to canvas pixel width
+      frame.style.width = isMobile ? '' : (canvas.width + 'px');
       document.getElementById('dGridLbl').textContent = getGridLabel();
     }
 
