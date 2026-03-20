@@ -223,6 +223,11 @@
     .rm-pending { color: var(--purple); font-size: 14px; }
     @media (max-width: 680px) { .roadmap-grid { grid-template-columns: 1fr; } }
 
+    /* ── Google Play badge ── */
+    .gplay-badge-link { display: inline-block; line-height: 0; transition: opacity .15s; }
+    .gplay-badge-link:hover { opacity: .85; }
+    .gplay-badge-link img { display: block; }
+
     /* ── Download CTA ── */
     .feedback-sec { padding: 68px 0; }
     .form-card { background: var(--panel); border: 1px solid var(--line); padding: 32px 28px; margin-top: 40px; }
@@ -265,10 +270,11 @@
         <span class="badge badge-coming"><span class="rm-pending">◐</span> Drawing Canvas Coming Soon</span>
       </div>
       <div class="hero-actions">
-        <a href="https://play.google.com/store/apps/details?id=com.boredjejemon.paintopia" target="_blank" rel="noopener" class="btn btn-accent">
-          <span class="material-icons" style="font-size:18px;margin-right:7px;vertical-align:middle">android</span>Get it on Google Play
+        <a href="https://play.google.com/store/apps/details?id=com.boredjejemon.paintopia" target="_blank" rel="noopener" class="gplay-badge-link">
+          <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+               alt="Get it on Google Play" height="60">
         </a>
-        <a href="#demo" class="btn btn-ghost">Try the demo ↓</a>
+        <a href="#demo" class="btn btn-ghost" style="margin-top:4px">Try the demo ↓</a>
       </div>
     </div>
   </section>
@@ -319,8 +325,9 @@
         <p style="color:var(--muted);font-size:15px;margin-bottom:28px;max-width:420px;margin-left:auto;margin-right:auto">
           No invite needed — join directly through Google Play and help shape the future of PaintTopia.
         </p>
-        <a href="https://play.google.com/store/apps/details?id=com.boredjejemon.paintopia" target="_blank" rel="noopener" class="btn btn-accent" style="font-size:16px;height:52px;padding:0 32px">
-          <span class="material-icons" style="font-size:20px;margin-right:8px;vertical-align:middle">get_app</span>Download on Google Play
+        <a href="https://play.google.com/store/apps/details?id=com.boredjejemon.paintopia" target="_blank" rel="noopener" class="gplay-badge-link">
+          <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+               alt="Get it on Google Play" height="72">
         </a>
       </div>
     </div>
